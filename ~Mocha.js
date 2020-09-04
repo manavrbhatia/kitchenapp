@@ -117,7 +117,7 @@ function verifyUser(){
         } else {
             console.log("reattempting login");
         }
-      }, 500);
+      }, 2000);
 }
                                             
 function signOutUser(){
@@ -134,9 +134,10 @@ function getUserName(){
   setTimeout(function(){
     var user = firebase.auth().currentUser;
     if(user){
-          document.getElementById("guest-name").value = user.displayName;
-          document.getElementById("guest-name-confirm").value = user.displayName;
-          document.getElementById("user-name").innerHTML = user.displayName;
+          document.getElementById("guest-name").value = user.email;
+          document.getElementById("guest-name-confirm").value = user.email;
+          document.getElementById("user-name").innerHTML = user.email;
+          console.log(user.email);
         } else {
           console.log("ur a failure");
         }
