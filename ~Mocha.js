@@ -71,18 +71,22 @@ function deleteData(){
 }
 
 function verifyAdmin(){
-    firebase.auth().signInWithEmailAndPassword(document.getElementById("admin-email").value, document.getElementById("admin-password").value).catch(function(error) {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
+    function(){
+      firebase.auth().signInWithEmailAndPassword(document.getElementById("admin-email").value, document.getElementById("admin-password").value).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       window.alert("Error: " + errorCode + errorMessage); 
-    });
-    document.getElementById("admin-password").value = '';
-   var user = firebase.auth().currentUser;
-    if(user){
-      
-    } else {
-        console.log("ur a failure");
-    }
+      });
+      document.getElementById("admin-password").value = '';
+     var user = firebase.auth().currentUser;
+      if(user){
+
+      } else {
+          console.log("ur a failure");
+      }
+
+    })
 }
 
 function signOutAdmin(){
@@ -94,4 +98,68 @@ function signOutAdmin(){
     }).catch(function(error) {
       window.alert(error); 
     });
+
 }
+
+
+function verifyUser(){
+      firebase.auth().signInWithEmailAndPassword(document.getElementById("user-email").value, document.getElementById("user-password").value).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        window.alert("Error: " + errorCode + errorMessage);
+      });
+      setTimeout(function(){
+        var user = firebase.auth().currentUser;
+        if(user){
+          document.getElementById("user-password").value = '';
+          window.location.href = "userIndex.html"
+          console.log("sign-in successful")
+        } else {
+            console.log("reattempting login");
+        }
+      }, 500);
+}
+                                            
+function signOutUser(){
+    firebase.auth().signOut().then(function() {
+      console.log("sign out Successful");
+      window.location.href = "index.html"
+    }).catch(function(error) {
+      window.alert(error); 
+    });
+
+}
+
+function getUserName(){
+  var user = firebase.auth().currentUser;
+  if(user){
+        document.getElementById("guest-name").value = user.displayName;
+        document.getElementById("guest-name-confirm").value = user.displayName;
+        document.getElementById("user-name").innerHTML = user.displayName;
+      } else {
+        console.log("ur a failure");
+        setTimeout(getUserName, 300);
+      }
+}
+
+function newUser(){
+  firebase.auth().createUserWithEmailAndPassword(document.getElementById("user-email").value, document.getElementById("user-password").value).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    window.alert("Error: " + errorCode + errorMessage);
+  });
+  setTimeout(function(){
+        var user = firebase.auth().currentUser;
+        if(user){
+          user.updateProfile({
+            displayName: document.getElementById("user-name").value
+          })
+          window.location.href = "userLogin.html"
+          console.log("sign-up successful")
+          window.alert("Sign up Successful");
+        } else {
+            console.log("signup failure");
+        }
+      }, 3000);
+}
+
