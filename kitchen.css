@@ -151,6 +151,7 @@ body {
   text-align: center;
   letter-spacing: 0.05em;
   transition: all 0.5s;
+  text-decoration: none;
 
   color: #22223B;
 
@@ -174,6 +175,7 @@ body {
   content: '\00bb';
   opacity: 0;
   right: -20px;
+  text-decoration: none;
 }
 
 .check-in-button:hover span:after {
@@ -197,6 +199,7 @@ body {
   align-items: center;
   text-align: center;
   letter-spacing: 0.05em;
+  text-decoration: none;
 
   color: #F2E9E4;
   background: #4A4E69;
