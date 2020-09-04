@@ -131,15 +131,16 @@ function signOutUser(){
 }
 
 function getUserName(){
-  var user = firebase.auth().currentUser;
-  if(user){
-        document.getElementById("guest-name").value = user.displayName;
-        document.getElementById("guest-name-confirm").value = user.displayName;
-        document.getElementById("user-name").innerHTML = user.displayName;
-      } else {
-        console.log("ur a failure");
-        setTimeout(getUserName, 300);
-      }
+  setTimeout(function(){
+    var user = firebase.auth().currentUser;
+    if(user){
+          document.getElementById("guest-name").value = user.displayName;
+          document.getElementById("guest-name-confirm").value = user.displayName;
+          document.getElementById("user-name").innerHTML = user.displayName;
+        } else {
+          console.log("ur a failure");
+        }
+  }, 2000);
 }
 
 function newUser(){
@@ -154,7 +155,7 @@ function newUser(){
           user.updateProfile({
             displayName: document.getElementById("user-name").value
           })
-          window.location.href = "userLogin.html"
+          window.location.href = "userIndex.html"
           console.log("sign-up successful")
           window.alert("Sign up Successful");
         } else {
